@@ -8,22 +8,26 @@ This is in early development, so some of this documentation is not yet applicabl
 
 This is currently only available as a plugin.
 
-  script/plugin install git://github.com/ryanb/nested_form.git
+  rails plugin install git://github.com/ryanb/nested_form.git
 
 
 == Usage
 
-When installing this plugin it will add a file at public/javascripts/nested_form.js which should be included after jQuery.
+When installing this plugin it will add a file at public/javascripts/nested_form.js which should be included after jQuery. Either byt directly including them in your layout
 
   <%= javascript_include_tag 'jquery', 'nested_form' %>
 
+Or alternatively you can set the application defaults in config/application.rb
+
+  config.action_view.javascript_expansions[:defaults] = %w(jquery nested_form rails)
+
 You can then generate a nested form using the nested_form_for helper method.
 
-  <% nested_form_for @project do |f| %>
+  <%= nested_form_for @project do |f| %>
 
 Use this form just like normal, including the fields_for helper method for nesting models. The benefit of this plugin comes from the link_to_add and link_to_remove helper methods on the form builder.
 
-  <% f.fields_for :tasks do |task_form| %>
+  <%= f.fields_for :tasks do |task_form| %>
     <%= task_form.text_field :name %>
     <%= task_form.link_to_remove "Remove this task" %>
   <% end %>
